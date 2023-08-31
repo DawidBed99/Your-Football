@@ -1,0 +1,15 @@
+.ball {
+  animation: motion 12s linear infinite;
+  width: 300px;
+  height: 300px;
+  margin-bottom: 20px;
+}
+
+@keyframes motion {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

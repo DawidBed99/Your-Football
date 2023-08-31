@@ -1,4 +1,4 @@
-const { response } = require("express");
+const { res } = require("express");
 const express = require("express");
 const { DateTime } = require("luxon");
 const router = express.Router();
@@ -41,6 +41,64 @@ router.route("/posts").get(async (req, res) => {
     .toArray()
     .then((data) => {
       res.json(data);
+    });
+});
+//Creating new account
+router.route("/register").post(async (req, res) => {
+  let db_connect = dbo.getDb();
+  let myObj = {
+    email: req.body.email,
+    login: req.body.login,
+    password: req.body.password,
+  };
+
+  db_connect
+    .collection("users")
+    .findOne(myObj, function (err, res) {
+      if (err) throw err;
+    })
+    .then((data) => {
+      console.log(data);
+      if (data !== null) {
+        res.sendStatus(403);
+      } else {
+        db_connect
+          .collection("users")
+          .insertOne(myObj, function (err, res) {
+            if (err) throw err;
+            res.json(res);
+          })
+          .then((data) => {
+            res.sendStatus(200);
+          });
+      }
+    });
+});
+//Logging in
+
+router.route("/login").post(async (req, res) => {
+  let db_connect = dbo.getDb();
+  let myObj = {
+    login: req.body.login,
+  };
+
+  db_connect
+    .collection("users")
+    .findOne(myObj, function (err, res) {
+      if (err) throw err;
+    })
+    .then((data) => {
+      console.log(data);
+
+      if (data !== null) {
+        if (req.body.password === data.password) {
+          res.sendStatus(200);
+        } else if (req.body.password !== data.password) {
+          res.sendStatus(403);
+        }
+      } else if (data === null) {
+        res.sendStatus(403);
+      }
     });
 });
 module.exports = router;

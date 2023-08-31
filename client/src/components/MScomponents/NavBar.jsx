@@ -3,7 +3,7 @@ import {Box, AppBar, Avatar, Badge, Icon, InputBase, Toolbar, Typography, Link, 
 import React, { useState } from "react";
 import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
 import { Mail, Notifications } from "@mui/icons-material";
-
+import { Link as RouterLink} from "react-router-dom";
 
 const StyledToolbar = styled(Toolbar)({
     display:"flex",
@@ -53,9 +53,15 @@ function NavBar(){
     return(
         <AppBar position="sticky">
             <StyledToolbar >
-            <Typography width="400px"  variant="h3" padding={2}  sx={{display:{xs:"none",sm:"block"}}}>Your Football</Typography>
+            <Typography 
+             to="/mainSite/posts"
+             component={RouterLink}
+             width="400px"
+             variant="h3" padding={2}  sx={{display:{xs:"none",sm:"block", color:"white", textDecoration:"none"}}}>Your Football</Typography>
             <Icon  
-            sx={{width:"50px", height:"50px", display:{xs:"block", sm:"none"}, mr:"10px"}}
+            to="/mainSite/posts"
+            component={RouterLink}
+            sx={{width:"50px", height:"50px", display:{xs:"block", sm:"none", color:"white"}, mr:"10px"}}
             >
                 <SportsSoccerIcon sx={{width:"50px", height:"50px"}
             }>
@@ -70,13 +76,13 @@ function NavBar(){
             <Typography variant="span">Messi</Typography>
             </UserBox>
             <Icons>
-            <Badge badgeContent={4} color="error" sx={{display:{xs:"none", sm:"block"}}}>
+            {/* <Badge badgeContent={4} color="error" sx={{display:{xs:"none", sm:"block"}}}>
                 <Mail />
             </Badge>
             
             <Badge  badgeContent={4} color="error" sx={{display:{xs:"none", sm:"block"}}}>
                 <Notifications  />
-            </Badge>
+            </Badge> */}
             <Avatar 
             onClick={handleClick}
             src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Lionel_Messi_20180626.jpg"></Avatar>

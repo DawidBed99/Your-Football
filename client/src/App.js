@@ -1,23 +1,20 @@
 import React from "react";
-import Button from "@mui/material/Button";
-import { Box, Stack } from "@mui/material";
-import NavBar from "./components/NavBar";
-import RightBar from "./components/RightBar";
-import LeftBar from "./components/LeftBar";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainSite from "./components/MainSite";
-import Add from "./components/Add";
+import LogIn from "./components/LogIn";
+import Register from "./components/Register";
+import ProfileDetails from "./components/ProfileDetails";
 
 function App() {
   return (
-    <Box>
-      <NavBar />
-      <Stack direction={"row"} justifyContent={"space-between"} spacing={2}>
-        <LeftBar />
-        <MainSite exact path="/" element={<MainSite />} />
-        <RightBar />
-      </Stack>
-      <Add />
-    </Box>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/mainSite/*" element={<MainSite></MainSite>}></Route>
+        <Route exact path="/" element={<LogIn />}></Route>
+        <Route path="/register" element={<Register />}></Route>
+        <Route path="/profileDetails" element={<ProfileDetails />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

@@ -1,0 +1,12 @@
+@media only screen and (width<=600px) {
+  .profImg {
+    width: 350px;
+    height: 500px;
+  }
+}
+@media only screen and (width>600px) {
+  .profImg {
+    width: 550px;
+    height: 785px;
+  }
+}
