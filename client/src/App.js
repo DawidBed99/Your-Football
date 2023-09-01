@@ -4,6 +4,7 @@ import MainSite from "./components/MainSite";
 import LogIn from "./components/LogIn";
 import Register from "./components/Register";
 import ProfileDetails from "./components/ProfileDetails";
+import Leaugues from "./components/Leagues";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route exact path="/" element={<LogIn />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/profileDetails" element={<ProfileDetails />} />
+        <Route path="/leagues" element={<Leaugues />} />
       </Routes>
     </BrowserRouter>
   );

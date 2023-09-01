@@ -10,3 +10,7 @@
     height: 785px;
   }
 }
+
+.avatar:hover {
+  background-color: yellow;
+}

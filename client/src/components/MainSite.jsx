@@ -8,7 +8,6 @@ import LeftBar from "./MScomponents/LeftBar";
 import Posts from "./MScomponents/Posts";
 import Add from "./MScomponents/Add";
 
-
 function MainSite() {
   return (
     <Box>
