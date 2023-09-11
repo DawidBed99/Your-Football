@@ -1,6 +1,5 @@
 import {
   Box,
-  Typography,
   List,
   ListItem,
   ListItemIcon,
@@ -11,16 +10,12 @@ import {
 } from "@mui/material";
 import React from "react";
 import Home from "@mui/icons-material/Home";
-import styled from "@emotion/styled";
 import ModeNight from "@mui/icons-material/ModeNight";
 import Person from "@mui/icons-material/Person";
 import GroupsIcon from "@mui/icons-material/Groups";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import LightModeIcon from "@mui/icons-material/LightMode";
-import { Link as RouterLink } from "react-router-dom";
-function LeftBar() {
+function LeftBar({mode, setMode}) {
   return (
-    <Box flex={"2"} padding={2} sx={{ display: { xs: "none", sm: "block" } }}>
+    <Box flex={"2"} padding={2} sx={{ display: { xs: "none", md: "block" } }}>
       <Box position="fixed">
         <List>
           <ListItem disablePadding sx={{ mt: 3 }}>
@@ -33,7 +28,7 @@ function LeftBar() {
           </ListItem>
           <Divider />
           <ListItem disablePadding sx={{ mt: 3 }}>
-            <ListItemButton component="a" href="#users">
+            <ListItemButton component="a" href="/users">
               <ListItemIcon>
                 <Person fontSize="large" color="primary" />
               </ListItemIcon>
@@ -41,7 +36,7 @@ function LeftBar() {
             </ListItemButton>
           </ListItem>
           <Divider />
-          <ListItem disablePadding sx={{ mt: 3 }}>
+          {/* <ListItem disablePadding sx={{ mt: 3 }}>
             <ListItemButton component="a" href="/leagues">
               <ListItemIcon>
                 <GroupsIcon fontSize="large" color="primary" />
@@ -49,13 +44,13 @@ function LeftBar() {
               <ListItemText primary="Football Leagues" />
             </ListItemButton>
           </ListItem>
-          <Divider />
+          <Divider /> */}
           <ListItem disablePadding sx={{ mt: 3 }}>
             <ListItemButton component="a">
               <ListItemIcon>
                 <ModeNight fontSize="large" sx={{ color: "#ffaf00" }} />
               </ListItemIcon>
-              <Switch />
+              <Switch onChange={e=> setMode(mode==="light" ? "dark" : "light")}/>
             </ListItemButton>
           </ListItem>
           <Divider />

@@ -10,7 +10,7 @@ import React from "react";
 
 function RightBar() {
   return (
-    <Box flex={"2"} padding={2} sx={{ display: { xs: "none", sm: "block" } }}>
+    <Box flex={"2"} padding={2} sx={{ display: { xs: "none", md: "block" } }}>
       <Box position="fixed" ml="60px">
         <Stack mt={3} direction="column">
           <Typography textAlign="center" fontSize="36px">

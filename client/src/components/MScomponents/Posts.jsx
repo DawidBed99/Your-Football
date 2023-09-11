@@ -2,14 +2,12 @@ import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import {
   Avatar,
   Box,
-  Button,
   Card,
   CardActions,
   CardContent,
   CardHeader,
   CardMedia,
   Checkbox,
-  Divider,
   IconButton,
   Menu,
   MenuItem,
@@ -21,7 +19,6 @@ import {
 import React, { useEffect, useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ShareIcon from "@mui/icons-material/Share";
-import Link from "@mui/material/Link";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 function MainSite(props) {
@@ -55,20 +52,20 @@ function MainSite(props) {
       setLoading(false);
     }, 1000);
     getPosts();
-    return;
+    // return;
   }, [posts.length]);
 
   const postsList = posts.map((post) => {
     return (
       <Card key={post._id} sx={{ mt: "40px" }}>
         <CardHeader
-          avatar={<Avatar></Avatar>}
+          avatar={<Avatar>{post.userName.charAt(0)}</Avatar>}
           action={
             <IconButton onClick={handleClick} aria-label="settings">
               <MoreVertIcon />
             </IconButton>
           }
-          title="Charles Watts"
+          title={post.userName}
           subheader={post.postDate}
         />
         <Menu
@@ -137,7 +134,7 @@ function MainSite(props) {
           Latest posts and news
         </Typography>
       </Paper>
-      <Box width="100%" height="100%">
+      <Box sx={{width:{xs:"80%" , md:"100%"},height:"100%"}}>
         {loading ? (
           <Box>
             <Card sx={{ mt: "40px", padding: "12px" }}>

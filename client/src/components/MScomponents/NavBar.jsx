@@ -3,19 +3,17 @@ import {
   Box,
   AppBar,
   Avatar,
-  Badge,
   Icon,
   InputBase,
   Toolbar,
   Typography,
-  Link,
   Menu,
   MenuItem,
+  Button,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
-import { Mail, Notifications } from "@mui/icons-material";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate, useParams } from "react-router-dom";
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -50,7 +48,8 @@ const UserBox = styled(Box)(({ theme }) => ({
     display: "none",
   },
 }));
-function NavBar() {
+function NavBar(props) {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const handleClose = () => {
@@ -60,7 +59,42 @@ function NavBar() {
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
     setOpen(true);
+    console.log(profileDetails.profilePicture);
   };
+  const login = localStorage.getItem("login");
+  const [profileDetails, setProfileDetails] = useState("");
+
+  useEffect(() => {
+    async function getUser() {
+      const response = await fetch(
+        `http://localhost:5000/profileDetails/${login}`
+      );
+
+      if (!response.ok) {
+        const message = `An error occured: ${response.statusText}`;
+        window.alert(message);
+        return;
+      }
+      const user = await response.json();
+      setProfileDetails(user);
+    }
+    if (login.length > 0) {
+      getUser();
+    }
+  }, []);
+
+  const [dispBut, setDispBut] = useState("none");
+  const [dispBut2, setDispBut2] = useState("");
+  useEffect(() => {
+    if (login.length > 0) {
+      setDispBut("");
+      setDispBut2("none");
+    } else {
+      setDispBut("none");
+      setDispBut2("");
+    }
+    console.log(dispBut);
+  });
   return (
     <AppBar position="sticky">
       <StyledToolbar>
@@ -68,12 +102,12 @@ function NavBar() {
           to="/mainSite/posts"
           component={RouterLink}
           width="400px"
-          variant="h3"
+          variant="h4"
           padding={2}
           sx={{
             display: {
               xs: "none",
-              sm: "block",
+              md: "block",
               color: "white",
               textDecoration: "none",
             },
@@ -87,7 +121,7 @@ function NavBar() {
           sx={{
             width: "50px",
             height: "50px",
-            display: { xs: "block", sm: "none", color: "white" },
+            display: { xs: "block", md: "none", color: "white" },
             mr: "10px",
           }}
         >
@@ -98,26 +132,24 @@ function NavBar() {
         <Search>
           <InputBase sx={{ width: "100%" }} placeholder="Search...." />
         </Search>
-        <UserBox>
-          <Avatar
-            onClick={handleClick}
-            src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Lionel_Messi_20180626.jpg"
-          ></Avatar>
-          <Typography variant="span">Messi</Typography>
-        </UserBox>
-        <Icons>
-          {/* <Badge badgeContent={4} color="error" sx={{display:{xs:"none", sm:"block"}}}>
-                <Mail />
-            </Badge>
-            
-            <Badge  badgeContent={4} color="error" sx={{display:{xs:"none", sm:"block"}}}>
-                <Notifications  />
-            </Badge> */}
-          <Avatar
-            onClick={handleClick}
-            src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Lionel_Messi_20180626.jpg"
-          ></Avatar>
-        </Icons>
+        <Box>
+          <Box>
+            <UserBox>
+              <Avatar
+                onClick={handleClick}
+                src={profileDetails.profilePicture}
+              ></Avatar>
+              <Typography variant="span">{profileDetails.login} </Typography>
+            </UserBox>
+
+            <Icons>
+              <Avatar
+                onClick={handleClick}
+                src={profileDetails.profilePicture}
+              ></Avatar>
+            </Icons>
+          </Box>
+        </Box>
       </StyledToolbar>
       <Menu
         id="demo-positioned-menu"
@@ -135,14 +167,36 @@ function NavBar() {
         }}
       >
         <MenuItem
-          to="/profileDetails"
-          component={RouterLink}
-          onClick={handleClose}
+         sx={{display:`${dispBut}`}}
+          // to="/`${.props.login}`"
+          // component={RouterLink}
+          onClick={() => {
+            handleClose();
+            navigate(`/profileDetails/${props.login}`);
+          }}
         >
           Profile
         </MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem
+         sx={{display:`${dispBut}`}}
+          onClick={() => {
+            handleClose();
+            localStorage.setItem("login", "");
+            navigate("/");
+          }}
+        >
+          Logout
+        </MenuItem>
+        <MenuItem
+        sx={{display:`${dispBut2}`}}
+          onClick={() => {
+            handleClose();
+            localStorage.setItem("login", "");
+            navigate("/");
+          }}
+        >
+          Sign in
+        </MenuItem>
       </Menu>
     </AppBar>
   );

@@ -19,6 +19,7 @@ import LeftBar from "./MScomponents/LeftBar";
 import "./profileImg.css";
 import BadgeIcon from "@mui/icons-material/Badge";
 import { BrowserView, MobileView } from "react-device-detect";
+import { useParams } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -30,12 +31,12 @@ const style = {
 
 
 
-function ProfileDetails(props) {
+function SingleUser(props) {
   const setMode=props.setMode
   const mode=props.mode
+  
   const [open, setOpen] = useState(false);
 
-  const login = localStorage.getItem("login");
   const [disp, setDisp] = useState("none");
   const [disp2, setDisp2] = useState("none");
 
@@ -55,12 +56,12 @@ function ProfileDetails(props) {
     }, 1500);
   }, []);
 
-  const [profileDetails, setProfileDetails] = useState("");
-
+  const [user, setUser] = useState("");
+  const params = useParams();
   useEffect(() => {
     async function getUser() {
       const response = await fetch(
-        `http://localhost:5000/profileDetails/${login}`
+        `http://localhost:5000/users/${params.id}`
       );
 
       if (!response.ok) {
@@ -70,55 +71,18 @@ function ProfileDetails(props) {
       }
       const user = await response.json();
       
-      if(user.profilePicture==="null"){
-        setDisp2("none")
-      }
-      else{
-        setDisp2("block")
-      }
-      setProfileDetails(user);
+      setUser(user);
     }
     
     getUser();
   }, []);
  
-  const [form, setForm] = useState({
-    profilePicture: "",
-  });
-
-  
-  function updateForm(value) {
-    return setForm((prev) => {
-      return { ...prev, ...value };
-    });
-  }
-
-  async function uploadProfilePicture(e) {
-    console.log("here!");
-    e.preventDefault();
-    const profilePictureURL = {
-      profilePicture:form.profilePicture,
-     
-    };
-    await fetch(`http://localhost:5000/addProfilePicture/${login}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(profilePictureURL),
-    }).catch((error) => {
-      window.alert(error);
-      return;
-    });
-    console.log("Profile picture added!");
-    setOpen(false)
-  }
  
   return (
-    <Box height="100vh" bgcolor="background.default" color="text.primary">
+    <Box bgcolor="background.default" color="text.primary" height="100vh">
       <NavBar />
       <Stack direction={"row"} justifyContent={"space-between"} span={2}>
-        <LeftBar setMode={setMode} mode={mode} />
+        <LeftBar  setMode={setMode} mode={mode} />
         <Divider
           position="fixed"
           orientation="vertical"
@@ -198,7 +162,7 @@ function ProfileDetails(props) {
                   height: { xs: "150px", sm: "400px"},
                   
                 }}
-                src={profileDetails.profilePicture}
+                src={user.profilePicture}
               ></Avatar>
               <Modal
             disableAutoFocus={true}
@@ -208,7 +172,7 @@ function ProfileDetails(props) {
             aria-describedby="modal-modal-description"
           >
             <Box sx={style}>
-              <img src={profileDetails.profilePicture} />
+              <img src={user.profilePicture} />
             </Box>
           </Modal>
             </Box>
@@ -258,7 +222,7 @@ function ProfileDetails(props) {
                     ml="6px"
                   >
                     {/* {login} */}
-                    {profileDetails.login}
+                    {user.login}
                   </Typography>
                 </Stack>
 
@@ -270,60 +234,10 @@ function ProfileDetails(props) {
                     sx={{ fontSize: { xs: "16px", sm: "28px" } }}
                     ml="6px"
                   >
-                    {profileDetails.email}
+                    {user.email}
                   </Typography>
                   
                 </Stack>
-                <Button
-                onClick={(e) => setOpen(true)}
-                variant="contained" sx={{fontSize:"16px"}}>Add profile picture</Button>
-                <Modal
-                open={open}
-                onClose={(e) => setOpen(false)}
-                sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                <Box mt="40px" bgcolor="white"  borderRadius="24px"
-                sx={{
-                  width: { xs: "350px", md: "400px", sm:"600px" },
-                  height: { xs: "500px", sm: "200px" },
-                  padding: "12px",
-                  display:"flex",
-                  alignItems:"center",
-                  justifyContent:"space-evenly",
-                  flexDirection:"column"
-                }}>
-                  <Typography variant="h5">Profile picture URL</Typography>
-                  <form 
-                  onSubmit={uploadProfilePicture}
-                  >
-                    <Stack
-                      direction="column"
-                      gap="10px"
-                      display="flex"
-                      alignItems="center"
-                    >
-                      <TextField
-                        style={{ width: "300px" }}
-                        id="profilePicture"
-                        label="Add profile picture URL"
-                        variant="outlined"
-                        onChange={(e) =>
-                          updateForm({ profilePicture: e.target.value })
-                        }
-                      />
-
-                      <Button
-                        sx={{ width: "100px" }}
-                        mt="10px"
-                        type="submit"
-                        variant="contained"
-                        
-                      >
-                        Add
-                      </Button>
-                    </Stack>
-                  </form>
-                </Box>
-                </Modal>
               </Stack>
             )}
           </Stack>
@@ -333,4 +247,4 @@ function ProfileDetails(props) {
   );
 }
 
-export default ProfileDetails;
+export default SingleUser;
