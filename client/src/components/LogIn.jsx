@@ -9,7 +9,7 @@ function LogIn() {
   const [form, setForm] = useState({
     login: "",
     password: "",
-    id:""
+    id: "",
   });
   function updateForm(value) {
     return setForm((prev) => {
@@ -32,8 +32,8 @@ function LogIn() {
     console.log(response);
     if (response.ok) {
       localStorage.setItem("login", form.login);
-      localStorage.setItem("id", form._id)
-      console.log(form._id)
+      localStorage.setItem("id", form._id);
+      console.log(form._id);
       navigate("/mainSite/posts");
     } else if (!response.ok) {
       alert("Incorrect Login or Password!");

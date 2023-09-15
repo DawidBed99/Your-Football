@@ -2,6 +2,7 @@ import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import {
   Avatar,
   Box,
+  Button,
   Card,
   CardActions,
   CardContent,
@@ -12,6 +13,7 @@ import {
   Menu,
   MenuItem,
   Paper,
+  Popper,
   Skeleton,
   Stack,
   Typography,
@@ -21,20 +23,12 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ShareIcon from "@mui/icons-material/Share";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-function MainSite(props) {
+function MainSite() {
+  const login = localStorage.getItem("login");
+
   const [loading, setLoading] = useState(true);
 
   const [posts, setPosts] = useState([]);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [open, setOpen] = useState(false);
-  const handleClose = () => {
-    setAnchorEl(null);
-    setOpen(false);
-  };
-  const handleClick = (e) => {
-    setAnchorEl(e.currentTarget);
-    setOpen(true);
-  };
 
   useEffect(() => {
     async function getPosts() {
@@ -50,51 +44,69 @@ function MainSite(props) {
     }
     setTimeout(() => {
       setLoading(false);
-     
     }, 1000);
     getPosts();
-   
+
     // return;
   }, [posts.length]);
-  
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popper" : undefined;
+
+  async function deletePost(id) {
+    const response = await fetch(`http://localhost:5000/${id}`, {
+      method: "DELETE",
+    });
+    if (!response.ok) {
+      const message = `An error occured: ${response.statusText}`;
+      window.alert(message);
+      return;
+    }
+    const newPosts = posts.filter((el) => el._id !== id);
+    setPosts(newPosts);
+    console.log("post deleted");
+  }
+
   const postsList = posts.map((post) => {
-  
     return (
       <Card key={post._id} sx={{ mt: "40px" }}>
         <CardHeader
-          avatar={<Avatar 
-          src={post.profilePictureURL}
-          >
-            </Avatar>}
+          avatar={<Avatar src={post.profilePictureURL}></Avatar>}
           action={
-            <IconButton onClick={handleClick} aria-label="settings">
-              <MoreVertIcon />
-            </IconButton>
+            post.userName === login ? (
+              <IconButton>
+                <Box
+                  sx={{
+                    borderRadius: "6px",
+                    mt: 1,
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={() => {
+                      deletePost(post._id);
+                    }}
+                  >
+                    <DeleteIcon /> Delete
+                  </Button>
+                </Box>
+                {/* </Popper> */}
+              </IconButton>
+            ) : (
+              <Box></Box>
+            )
           }
           title={post.userName}
           subheader={post.postDate}
         />
-        <Menu
-          id="demo-positioned-menu"
-          aria-labelledby="demo-positioned-button"
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "right",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-        >
-          <MenuItem onClick={handleClose}>
-            <DeleteIcon />
-            <Typography ml="4px">Delete Post</Typography>
-          </MenuItem>
-        </Menu>
-
         <CardMedia component="img" height="20%" image={post.imgURL} />
         <CardContent>
           <Typography fontSize={"18px"} color="text.secondary">
@@ -140,7 +152,7 @@ function MainSite(props) {
           Latest posts and news
         </Typography>
       </Paper>
-      <Box sx={{width:{xs:"80%" , md:"100%"},height:"100%"}}>
+      <Box sx={{ width: { xs: "80%", md: "100%" }, height: "100%" }}>
         {loading ? (
           <Box>
             <Card sx={{ mt: "40px", padding: "12px" }}>

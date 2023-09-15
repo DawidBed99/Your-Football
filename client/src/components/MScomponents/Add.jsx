@@ -24,26 +24,24 @@ const UserBox = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   gap: "10px",
-
 }));
 
 const Add = () => {
   const login = localStorage.getItem("login");
   const [logState, setLogState] = useState("none");
 
-  const handleLog = () =>{
-    if(login.length>0){
+  const handleLog = () => {
+    if (login.length > 0) {
       setLogState("");
+    } else {
+      setLogState("none");
     }
-    else{
-      setLogState("none")
-    }
-  }
+  };
   const navigate = useNavigate();
-  
+
   const [open3, setOpen3] = useState(false);
   const [anchorEl2, setAnchorEl2] = useState(null);
-  
+
   const handleClickEm = (e) => {
     setAnchorEl2(e.currentTarget);
     setOpen3(true);
@@ -64,8 +62,8 @@ const Add = () => {
   const [post, setPost] = useState({
     post: "",
     imgURL: "",
-    userName:`${login}`,
-    profilePictureURL:"",
+    userName: `${login}`,
+    profilePictureURL: "",
   });
 
   function updatePost(value) {
@@ -86,16 +84,14 @@ const Add = () => {
       return;
     });
     console.log("Post added");
-    console.log(post.profilePictureURL)
+    console.log(post.profilePictureURL);
     setOpen(false);
   }
 
   useEffect(() => {
     handleLog();
-
   }, []);
 
-  
   const [profileDetails, setProfileDetails] = useState("");
 
   useEffect(() => {
@@ -121,15 +117,15 @@ const Add = () => {
     <>
       <Tooltip title="Create post">
         <Fab
-          onClick={(e) => {setOpen(true);
-            updatePost({profilePictureURL:profileDetails.profilePicture })
-           
+          onClick={(e) => {
+            setOpen(true);
+            updatePost({ profilePictureURL: profileDetails.profilePicture });
           }}
-                    sx={{
+          sx={{
             position: "fixed",
             bottom: 20,
             left: { xs: "calc(50% - 25px)", md: 30 },
-            display:`${logState}`
+            display: `${logState}`,
           }}
           color="primary"
           aria-label="add"
@@ -143,14 +139,13 @@ const Add = () => {
         onClose={(e) => setOpen(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-       
       >
         <Box
           display={"flex"}
           flexWrap={"wrap"}
           flexDirection={"column"}
           sx={{
-            width: { xs: "350px", md: "1200px", sm:"600px" },
+            width: { xs: "350px", md: "1200px", sm: "600px" },
             height: { xs: "500px", sm: "600px" },
             padding: "12px",
           }}
@@ -158,19 +153,18 @@ const Add = () => {
           borderRadius="24px"
         >
           <Typography
-          width="100%"
-          sx={{textAlign:"center"}}
+            width="100%"
+            sx={{ textAlign: "center" }}
             mt="20px"
             variant="h3"
             textAlign="center"
             fontWeight="500"
-           
           >
             Create post
           </Typography>
           <UserBox
             mt={"40px"}
-            sx={{ ml: { xs: "40px", md: "120px",sm:"60px" } }}
+            sx={{ ml: { xs: "40px", md: "120px", sm: "60px" } }}
             height="80px"
           >
             <Avatar
@@ -178,7 +172,7 @@ const Add = () => {
               src={profileDetails.profilePicture}
             ></Avatar>
             <Typography variant="span" fontSize="24px">
-             {login}
+              {login}
             </Typography>
           </UserBox>
           <Box width={"100%"} display="flex" justifyContent="center" mt="24px">
@@ -194,7 +188,7 @@ const Add = () => {
               onChange={(e) => updatePost({ post: e.target.value })}
             />
           </Box>
-          <Box sx={{ ml: { xs: "0", md: "108px", sm:"46px" } }} gap="10px">
+          <Box sx={{ ml: { xs: "0", md: "108px", sm: "46px" } }} gap="10px">
             {/* <input 
        accept="image/*" 
        id="icon-button-file"
@@ -237,9 +231,7 @@ const Add = () => {
                   onChange={(e) => updatePost({ imgURL: e.target.value })}
                   style={{ width: "95%" }}
                 ></TextField>
-                <Button onClick={(e) =>setOpen3(false)
-               }
-                 variant="contained">
+                <Button onClick={(e) => setOpen3(false)} variant="contained">
                   <Typography>Add</Typography>
                 </Button>
               </Box>
@@ -294,9 +286,8 @@ const Add = () => {
               />
             </IconButton>
             <Button
-              onClick={() => uploadPost()
-               }
-              sx={{ ml: { lg:"700px",md: "432px", xs: "42px", sm:"224px" } }}
+              onClick={() => uploadPost()}
+              sx={{ ml: { lg: "700px", md: "432px", xs: "42px", sm: "224px" } }}
               variant="contained"
             >
               <Typography variant="h7" fontSize="14px" mr="8px">
@@ -304,7 +295,6 @@ const Add = () => {
               </Typography>{" "}
               <SendIcon />
             </Button>
-        
           </Box>
         </Box>
       </Modal>

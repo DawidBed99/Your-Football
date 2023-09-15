@@ -59,7 +59,6 @@ function NavBar(props) {
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
     setOpen(true);
-    console.log(profileDetails.profilePicture);
   };
   const login = localStorage.getItem("login");
   const [profileDetails, setProfileDetails] = useState("");
@@ -93,7 +92,6 @@ function NavBar(props) {
       setDispBut("none");
       setDispBut2("");
     }
-    console.log(dispBut);
   });
   return (
     <AppBar position="sticky">
@@ -167,7 +165,7 @@ function NavBar(props) {
         }}
       >
         <MenuItem
-         sx={{display:`${dispBut}`}}
+          sx={{ display: `${dispBut}` }}
           // to="/`${.props.login}`"
           // component={RouterLink}
           onClick={() => {
@@ -178,7 +176,7 @@ function NavBar(props) {
           Profile
         </MenuItem>
         <MenuItem
-         sx={{display:`${dispBut}`}}
+          sx={{ display: `${dispBut}` }}
           onClick={() => {
             handleClose();
             localStorage.setItem("login", "");
@@ -188,7 +186,7 @@ function NavBar(props) {
           Logout
         </MenuItem>
         <MenuItem
-        sx={{display:`${dispBut2}`}}
+          sx={{ display: `${dispBut2}` }}
           onClick={() => {
             handleClose();
             localStorage.setItem("login", "");

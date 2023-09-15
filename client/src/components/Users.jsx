@@ -9,7 +9,7 @@ import {
   CardHeader,
   Divider,
   Stack,
-  Typography
+  Typography,
 } from "@mui/material";
 import { red } from "@mui/material/colors";
 import Arrow from "@mui/icons-material/KeyboardDoubleArrowRight";
@@ -17,10 +17,9 @@ import NavBar from "./MScomponents/NavBar";
 import LeftBar from "./MScomponents/LeftBar";
 import { useNavigate } from "react-router-dom";
 
-
 export default function Users(props) {
-  const setMode=props.setMode
-  const mode=props.mode
+  const setMode = props.setMode;
+  const mode = props.mode;
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
 
@@ -42,19 +41,18 @@ export default function Users(props) {
     return;
   }, [users.length]);
 
-
   const userList = users.map((user) => {
     return (
-      <Box  mt="20px" width="50%">
+      <Box mt="20px" width="50%">
         <Card sx={{ mb: "20px" }}>
           <CardHeader
             avatar={
-              <Avatar  aria-label="profile picture"   src={user.profilePicture}>
-              
-              </Avatar>
+              <Avatar
+                aria-label="profile picture"
+                src={user.profilePicture}
+              ></Avatar>
             }
             title={user.login}
-            
           />
 
           <CardContent>
@@ -62,7 +60,7 @@ export default function Users(props) {
               endIcon={<Arrow sx={{ width: "20px", height: "20px" }} />}
               variant="contained"
               sx={{ fontSize: "14px" }}
-              onClick={()=> navigate(`/users/${user._id}`)}
+              onClick={() => navigate(`/users/${user._id}`)}
             >
               Go to profile details
             </Button>
@@ -73,10 +71,11 @@ export default function Users(props) {
   });
   return (
     <Box bgcolor="background.default" color="text.primary">
-<NavBar />
-   <Stack direction="row">
-    <LeftBar setMode={setMode} mode={mode} />
-    <Divider  position="fixed"
+      <NavBar />
+      <Stack direction="row">
+        <LeftBar setMode={setMode} mode={mode} />
+        <Divider
+          position="fixed"
           orientation="vertical"
           flexItem
           sx={{
@@ -84,17 +83,19 @@ export default function Users(props) {
             left: "300px",
             height: "85%",
             display: { xs: "none", md: "block" },
-          }} />
-    <Box flex={12}
-    mt="40px"
-      display="flex"
-      justifyContent="center"
-      flexDirection="column"
-      alignItems="center"
-    >
-      {userList}
-    </Box>
-    </Stack>
+          }}
+        />
+        <Box
+          flex={12}
+          mt="40px"
+          display="flex"
+          justifyContent="center"
+          flexDirection="column"
+          alignItems="center"
+        >
+          {userList}
+        </Box>
+      </Stack>
     </Box>
   );
 }

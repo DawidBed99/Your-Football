@@ -13,7 +13,7 @@ import Home from "@mui/icons-material/Home";
 import ModeNight from "@mui/icons-material/ModeNight";
 import Person from "@mui/icons-material/Person";
 import GroupsIcon from "@mui/icons-material/Groups";
-function LeftBar({mode, setMode}) {
+function LeftBar({ mode, setMode }) {
   return (
     <Box flex={"2"} padding={2} sx={{ display: { xs: "none", md: "block" } }}>
       <Box position="fixed">
@@ -50,7 +50,9 @@ function LeftBar({mode, setMode}) {
               <ListItemIcon>
                 <ModeNight fontSize="large" sx={{ color: "#ffaf00" }} />
               </ListItemIcon>
-              <Switch onChange={e=> setMode(mode==="light" ? "dark" : "light")}/>
+              <Switch
+                onChange={(e) => setMode(mode === "light" ? "dark" : "light")}
+              />
             </ListItemButton>
           </ListItem>
           <Divider />

@@ -166,4 +166,13 @@ router.patch("/addProfilePicture/:login", async (req, res) => {
   res.send(result).status(200);
 });
 
+//Deleting post
+router.route("/:id").delete(async (req, res) => {
+  let db_connect = dbo.getDb();
+  const myquery = { _id: new ObjectId(req.params.id) };
+  let result = db_connect.collection("posts").deleteOne(myquery);
+
+  res.send(result).status(200);
+});
+
 module.exports = router;

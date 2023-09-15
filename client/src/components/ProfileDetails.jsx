@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import {
-
   Avatar,
   Box,
   Divider,
   Icon,
   Modal,
-
   Skeleton,
   Stack,
   TextField,
@@ -28,11 +26,9 @@ const style = {
   bgcolor: "rgba(0,0,0,0.7)",
 };
 
-
-
 function ProfileDetails(props) {
-  const setMode=props.setMode
-  const mode=props.mode
+  const setMode = props.setMode;
+  const mode = props.mode;
   const [open, setOpen] = useState(false);
 
   const login = localStorage.getItem("login");
@@ -69,24 +65,22 @@ function ProfileDetails(props) {
         return;
       }
       const user = await response.json();
-      
-      if(user.profilePicture==="null"){
-        setDisp2("none")
-      }
-      else{
-        setDisp2("block")
+
+      if (user.profilePicture === "null") {
+        setDisp2("none");
+      } else {
+        setDisp2("block");
       }
       setProfileDetails(user);
     }
-    
+
     getUser();
   }, []);
- 
+
   const [form, setForm] = useState({
     profilePicture: "",
   });
 
-  
   function updateForm(value) {
     return setForm((prev) => {
       return { ...prev, ...value };
@@ -97,8 +91,7 @@ function ProfileDetails(props) {
     console.log("here!");
     e.preventDefault();
     const profilePictureURL = {
-      profilePicture:form.profilePicture,
-     
+      profilePicture: form.profilePicture,
     };
     await fetch(`http://localhost:5000/addProfilePicture/${login}`, {
       method: "PATCH",
@@ -111,9 +104,9 @@ function ProfileDetails(props) {
       return;
     });
     console.log("Profile picture added!");
-    setOpen(false)
+    setOpen(false);
   }
- 
+
   return (
     <Box height="100vh" bgcolor="background.default" color="text.primary">
       <NavBar />
@@ -147,51 +140,46 @@ function ProfileDetails(props) {
               animation="wave"
               variant="circular"
               sx={{
-                
                 width: { xs: "150px", sm: "400px" },
                 height: { xs: "150px", sm: "400px" },
-               
               }}
             />
           ) : (
             <Box>
               {/* <BrowserView> */}
               <Box display={disp2}>
-              <Box>
-                
-                      <Box
-                onClick={handleClick}
-                onMouseOut={() => setDisp("none")}
-                color="white"
-                display={disp}
-                sx={{
-                  zIndex: "999",
-                  position: "absolute",
-                  width: { xs: "150px", sm: "400px" },
-                  height: { xs: "150px", sm: "400px" },
-                  borderRadius: "50%",
-                  cursor: "pointer",
-                  backgroundColor: "rgba(0,0,0,0.6)",
-                }}
-              >
-                <Box
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  sx={{
-                    position: "absolute",
-                    width: { xs: "150px", sm: "400px" },
-                    height: { xs: "150px", sm: "400px" },
-                    borderRadius: "50%",
-                    fontSize: { xs: "12px", sm: "24px" },
-                  }}
-                >
-                  Click to show in Fullscreen
+                <Box>
+                  <Box
+                    onClick={handleClick}
+                    onMouseOut={() => setDisp("none")}
+                    color="white"
+                    display={disp}
+                    sx={{
+                      zIndex: "999",
+                      position: "absolute",
+                      width: { xs: "150px", sm: "400px" },
+                      height: { xs: "150px", sm: "400px" },
+                      borderRadius: "50%",
+                      cursor: "pointer",
+                      backgroundColor: "rgba(0,0,0,0.6)",
+                    }}
+                  >
+                    <Box
+                      display="flex"
+                      justifyContent="center"
+                      alignItems="center"
+                      sx={{
+                        position: "absolute",
+                        width: { xs: "150px", sm: "400px" },
+                        height: { xs: "150px", sm: "400px" },
+                        borderRadius: "50%",
+                        fontSize: { xs: "12px", sm: "24px" },
+                      }}
+                    >
+                      Click to show in Fullscreen
+                    </Box>
+                  </Box>
                 </Box>
-              </Box>
-                
-              
-              </Box>
               </Box>
               {/* </BrowserView> */}
               <Avatar
@@ -199,22 +187,21 @@ function ProfileDetails(props) {
                 className="avatar"
                 sx={{
                   width: { xs: "150px", sm: "400px" },
-                  height: { xs: "150px", sm: "400px"},
-                  
+                  height: { xs: "150px", sm: "400px" },
                 }}
                 src={profileDetails.profilePicture}
               ></Avatar>
               <Modal
-            disableAutoFocus={true}
-            open={fullScreen}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={style}>
-              <img src={profileDetails.profilePicture} />
-            </Box>
-          </Modal>
+                disableAutoFocus={true}
+                open={fullScreen}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box sx={style}>
+                  <img src={profileDetails.profilePicture} />
+                </Box>
+              </Modal>
             </Box>
             // </Tooltip>
           )}
@@ -229,9 +216,9 @@ function ProfileDetails(props) {
                 animation="wave"
                 variant="rounded"
                 sx={{
-                    width: { xs: "300px", sm: "350px" },
-                    height: { xs: "250px", sm: "350px" },
-                  }}
+                  width: { xs: "300px", sm: "350px" },
+                  height: { xs: "250px", sm: "350px" },
+                }}
               />
             ) : (
               <Stack
@@ -278,57 +265,66 @@ function ProfileDetails(props) {
                   >
                     {profileDetails.email}
                   </Typography>
-                  
                 </Stack>
                 <Button
-                onClick={(e) => setOpen(true)}
-                variant="contained" sx={{fontSize:"16px"}}>Add profile picture</Button>
+                  onClick={(e) => setOpen(true)}
+                  variant="contained"
+                  sx={{ fontSize: "16px" }}
+                >
+                  Add profile picture
+                </Button>
                 <Modal
-                open={open}
-                onClose={(e) => setOpen(false)}
-                sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                <Box mt="40px" bgcolor="white"  borderRadius="24px"
-                sx={{
-                  width: { xs: "350px", md: "400px", sm:"600px" },
-                  height: { xs: "500px", sm: "200px" },
-                  padding: "12px",
-                  display:"flex",
-                  alignItems:"center",
-                  justifyContent:"space-evenly",
-                  flexDirection:"column"
-                }}>
-                  <Typography variant="h5">Profile picture URL</Typography>
-                  <form 
-                  onSubmit={uploadProfilePicture}
+                  open={open}
+                  onClose={(e) => setOpen(false)}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Box
+                    mt="40px"
+                    bgcolor="white"
+                    borderRadius="24px"
+                    sx={{
+                      width: { xs: "350px", md: "400px", sm: "600px" },
+                      height: { xs: "500px", sm: "200px" },
+                      padding: "12px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-evenly",
+                      flexDirection: "column",
+                    }}
                   >
-                    <Stack
-                      direction="column"
-                      gap="10px"
-                      display="flex"
-                      alignItems="center"
-                    >
-                      <TextField
-                        style={{ width: "300px" }}
-                        id="profilePicture"
-                        label="Add profile picture URL"
-                        variant="outlined"
-                        onChange={(e) =>
-                          updateForm({ profilePicture: e.target.value })
-                        }
-                      />
-
-                      <Button
-                        sx={{ width: "100px" }}
-                        mt="10px"
-                        type="submit"
-                        variant="contained"
-                        
+                    <Typography variant="h5">Profile picture URL</Typography>
+                    <form onSubmit={uploadProfilePicture}>
+                      <Stack
+                        direction="column"
+                        gap="10px"
+                        display="flex"
+                        alignItems="center"
                       >
-                        Add
-                      </Button>
-                    </Stack>
-                  </form>
-                </Box>
+                        <TextField
+                          style={{ width: "300px" }}
+                          id="profilePicture"
+                          label="Add profile picture URL"
+                          variant="outlined"
+                          onChange={(e) =>
+                            updateForm({ profilePicture: e.target.value })
+                          }
+                        />
+
+                        <Button
+                          sx={{ width: "100px" }}
+                          mt="10px"
+                          type="submit"
+                          variant="contained"
+                        >
+                          Add
+                        </Button>
+                      </Stack>
+                    </form>
+                  </Box>
                 </Modal>
               </Stack>
             )}
