@@ -65,6 +65,7 @@ const Add = () => {
     post: "",
     imgURL: "",
     userName:`${login}`,
+    profilePictureURL:"",
   });
 
   function updatePost(value) {
@@ -85,7 +86,7 @@ const Add = () => {
       return;
     });
     console.log("Post added");
-
+    console.log(post.profilePictureURL)
     setOpen(false);
   }
 
@@ -120,8 +121,11 @@ const Add = () => {
     <>
       <Tooltip title="Create post">
         <Fab
-          onClick={(e) => setOpen(true)}
-          sx={{
+          onClick={(e) => {setOpen(true);
+            updatePost({profilePictureURL:profileDetails.profilePicture })
+           
+          }}
+                    sx={{
             position: "fixed",
             bottom: 20,
             left: { xs: "calc(50% - 25px)", md: 30 },

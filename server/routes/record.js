@@ -18,6 +18,7 @@ router.route("/addPost").post(async (req, res) => {
     postDate: formattedDate,
     imgURL: req.body.imgURL,
     userName: req.body.userName,
+    profilePictureURL: req.body.profilePictureURL,
   };
   let db_connect = dbo.getDb();
   db_connect

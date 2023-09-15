@@ -50,16 +50,22 @@ function MainSite(props) {
     }
     setTimeout(() => {
       setLoading(false);
+     
     }, 1000);
     getPosts();
+   
     // return;
   }, [posts.length]);
-
+  
   const postsList = posts.map((post) => {
+  
     return (
       <Card key={post._id} sx={{ mt: "40px" }}>
         <CardHeader
-          avatar={<Avatar>{post.userName.charAt(0)}</Avatar>}
+          avatar={<Avatar 
+          src={post.profilePictureURL}
+          >
+            </Avatar>}
           action={
             <IconButton onClick={handleClick} aria-label="settings">
               <MoreVertIcon />

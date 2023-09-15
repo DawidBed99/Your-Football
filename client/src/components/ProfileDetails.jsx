@@ -146,8 +146,12 @@ function ProfileDetails(props) {
             <Skeleton
               animation="wave"
               variant="circular"
-              width="400px"
-              height="400px"
+              sx={{
+                
+                width: { xs: "150px", sm: "400px" },
+                height: { xs: "150px", sm: "400px" },
+               
+              }}
             />
           ) : (
             <Box>
@@ -224,8 +228,10 @@ function ProfileDetails(props) {
               <Skeleton
                 animation="wave"
                 variant="rounded"
-                width="350px"
-                height="300px"
+                sx={{
+                    width: { xs: "300px", sm: "350px" },
+                    height: { xs: "250px", sm: "350px" },
+                  }}
               />
             ) : (
               <Stack
