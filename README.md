@@ -20,7 +20,7 @@
 ### Database
 * MongoDB
   
-## Languages and tools used
+## Languages and tools
 
 ### Languages:
 * JavaScript
