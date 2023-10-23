@@ -72,21 +72,20 @@ function LogIn() {
             }}
             color="#1198f2"
           >
-            {" "}
-            Welcome to Your Football!{" "}
+            Welcome to Your Football!
           </Typography>
 
           <Typography
             textAlign="center"
             sx={{ fontSize: { xs: "1.5em", sm: "2em" } }}
           >
-            Here You can find content related to Football!{" "}
+            Here You can find content related to Football!
           </Typography>
           <Typography
             textAlign="center"
             sx={{ fontSize: { xs: "2em", sm: "2.5em" } }}
           >
-            Enjoy!{" "}
+            Enjoy!
           </Typography>
 
           <Stack
@@ -143,7 +142,6 @@ function LogIn() {
               </form>
               <Typography>No account? Go ahead and register! </Typography>
               <Link to="/register">
-                {" "}
                 <Button variant="contained" color="success">
                   Register
                 </Button>
